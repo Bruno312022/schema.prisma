@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model pedidos {
+  idpedidos Int       @id @default(autoincrement())
+  id        Int?
+  idproduto Int?
+  usuarios  usuarios? @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "pedidos_ibfk_1")
+  produtos  produtos? @relation(fields: [idproduto], references: [idproduto], onDelete: NoAction, onUpdate: NoAction, map: "pedidos_ibfk_2")
+
+  @@index([id], map: "id")
+  @@index([idproduto], map: "idproduto")
+}
+
+model produtos {
+  idproduto Int       @id @default(autoincrement())
+  prodnome  String    @db.VarChar(150)
+  proddesc  String    @db.Text
+  prodpreco Decimal   @db.Decimal(6, 2)
+  
+  pedidos   pedidos[]
+}
+
+model usuarios {
+  nome    String    @db.VarChar(30)
+  email   String    @unique(map: "email") @db.VarChar(30)
+  senha   String    @db.VarChar(10)
+  id      Int       @id @default(autoincrement())
+  
+  pedidos pedidos[]
+}
