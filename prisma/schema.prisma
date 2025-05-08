@@ -23,15 +23,25 @@ model produtos {
   prodnome  String    @db.VarChar(150)
   proddesc  String    @db.Text
   prodpreco Decimal   @db.Decimal(6, 2)
-  
   pedidos   pedidos[]
 }
 
 model usuarios {
-  nome    String    @db.VarChar(30)
-  email   String    @unique(map: "email") @db.VarChar(30)
-  senha   String    @db.VarChar(10)
   id      Int       @id @default(autoincrement())
-  
+  nome    String    @db.VarChar(30)
+  email   String    @db.VarChar(30)
+  senha   String    @db.VarChar(10)
   pedidos pedidos[]
+}
+
+
+model test {
+  idt Int @id
+  test String
+}
+
+
+model test1 {
+  idt1 Int @id
+  test1 String
 }
